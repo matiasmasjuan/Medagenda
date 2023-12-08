@@ -2,6 +2,10 @@
 const {
   Model
 } = require('sequelize');
+
+const bcrypt = require('bcrypt');
+const PASSWORD_SALT_ROUNDS = 10;
+
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     /**
@@ -10,11 +14,13 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      this.belongsTo(models.Profession, {foreignKey: 'professionId', constraints: false});
+      this.hasMany(models.Schedule, {as: 'schedules', foreignKey: 'doctorId'});
+      this.hasMany(models.Appointment, {as: 'appointments', foreignKey: 'userId'});
     }
   }
   User.init({
-    role: DataTypes.INTEGER,
+    role:  DataTypes.ENUM('Admin', 'Doctor', 'Patient'),
     name: DataTypes.STRING,
     email: DataTypes.STRING,
     password: DataTypes.STRING,
@@ -22,6 +28,12 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'User',
+  });
+  User.beforeSave(async (instance) => {
+    if (instance.changed('password')) {
+      const hash = await bcrypt.hash(instance.password, PASSWORD_SALT_ROUNDS);
+      instance.set('password', hash);
+    }
   });
   return User;
 };

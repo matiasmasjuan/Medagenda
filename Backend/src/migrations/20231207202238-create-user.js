@@ -10,7 +10,7 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       role: {
-        type: Sequelize.INTEGER
+        type: Sequelize.ENUM(['Admin', 'Doctor', 'Patient'])
       },
       name: {
         type: Sequelize.STRING
