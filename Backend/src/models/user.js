@@ -18,6 +18,9 @@ module.exports = (sequelize, DataTypes) => {
       this.hasMany(models.Schedule, {as: 'schedules', foreignKey: 'doctorId'});
       // this.hasMany(models.Appointment, {as: 'appointments', foreignKey: 'userId'});
     }
+    async checkPassword(password) {
+      return bcrypt.compare(password, this.password);
+    }
   }
   User.init({
     role:  DataTypes.ENUM('Admin', 'Doctor', 'Patient'),
@@ -31,7 +34,7 @@ module.exports = (sequelize, DataTypes) => {
   });
   User.beforeSave(async (instance) => {
     if (instance.changed('password')) {
-      const hash = await bcrypt.hash(instance.password, PASSWORD_SALT_ROUNDS);
+      const hash = await bcrypt.hashSync(instance.password, PASSWORD_SALT_ROUNDS);
       instance.set('password', hash);
     }
   });
