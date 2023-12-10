@@ -23,11 +23,9 @@
             </button>
           </RouterLink>
 
-          <RouterLink :to="{ name: 'register' }">
-            <button class="px-4 py-2 bg-primary text-white hover:text-lgray rounded-md">
-              Cerrar Sesión
-            </button>
-          </RouterLink>
+          <button @click="logout" class="px-4 py-2 bg-primary text-white hover:text-lgray rounded-md">
+            Cerrar Sesión
+          </button>
         </div>
 
         <div v-else class="hidden sm:flex space-x-6">
@@ -76,6 +74,12 @@ const toggleMobileMenu = () => {
 }
 const store = useStore()
 const user = computed(() => store.getters.getUser)
+
+const logout = () => {
+  store.dispatch('clearUser')
+  window.location.replace('/')
+}
+
 </script>
 
 <style scoped>

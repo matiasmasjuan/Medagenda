@@ -3,7 +3,11 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
-// import DefaultView from './components/home/DefaultView'
+
+const userFromLocalStorage = JSON.parse(localStorage.getItem('user'))
+if (userFromLocalStorage) {
+  store.dispatch('setUser', userFromLocalStorage)
+}
 
 const app = createApp(App)
 app.use(router)
