@@ -1,5 +1,5 @@
 <template>
-  <header class="sticky top-0 shadow-lg">
+  <header class="sticky top-0 shadow-lg bg-white">
     <nav class="flex sm:flex-row flex-col items-center justify-between gap-4 py-4 px-8">
 
       <div class="flex space-x-6 items-center ml-4 sm:ml-40">
@@ -17,12 +17,12 @@
 
         <div class="hidden sm:flex space-x-6">
           <RouterLink :to="{ name: 'home' }">
-            <button class="px-4 py-2 bg-transparent hover:text-primary rounded-full">
+            <button class="px-4 py-2 hover:text-primary rounded-full">
               Iniciar Sesión
             </button>
           </RouterLink>
 
-          <RouterLink :to="{ name: 'home' }">
+          <RouterLink :to="{ name: 'register' }">
             <button class="px-4 py-2 bg-primary text-white hover:text-lgray rounded-md">
               Registrarse
             </button>
@@ -31,12 +31,12 @@
 
         <div v-if="isMobileMenuOpen" class="sm:hidden absolute top-16 right-0 bg-white p-4 space-y-2">
           <RouterLink :to="{ name: 'home' }">
-            <button class="w-full text-left px-4 py-2 bg-transparent hover:text-primary rounded-full">
+            <button class="w-full text-left px-4 py-2 hover:text-primary rounded-full">
               Iniciar Sesión
             </button>
           </RouterLink>
 
-          <RouterLink :to="{ name: 'home' }">
+          <RouterLink :to="{ name: 'register' }">
             <button class="w-full text-left px-4 py-2 bg-primary text-white hover:text-lgray rounded-md">
               Registrarse
             </button>
