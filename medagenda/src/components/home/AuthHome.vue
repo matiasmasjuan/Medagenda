@@ -4,23 +4,23 @@
     <div class="mx-auto max-w-7xl px-4 pb-20 pt-40 flex mb-4 lg:pt-12 2xl:pt-36">
       <div class="w-1/2  ml-32">
         <h1 class="text-5xl mt-16">
-          En <span class="font-bold text-primary">Medagenda</span> cuidamos tu salud
+          Hola <span class="font-bold text-primary">{{ user.name }}</span> 👋
         </h1>
-        <p class="text-2xl text-gray-500 py-8">Date prisa y agenda tu hora lo antes posible</p>
+        <p class="text-2xl text-gray-500 py-8">¿Necesitas agendar una consulta?</p>
 
-        <div class="flex justify-center">
+        <div class="flex justify-left ml-20">
           <RouterLink :to="{ name: 'register' }">
             <button class="text-left px-8 py-2 bg-primary text-white hover:text-lgray rounded-md">
-              Registrarse
+              Agendar Hora
             </button>
           </RouterLink>
         </div>
 
-        <div class="flex justify-center">
+        <div class="flex justify-left">
           <p class="text-gray-600 pt-4">
-            ¿Ya tienes una cuenta?
+            ¿Ya tienes una hora reservada?
             <RouterLink :to="{ name: 'login' }">
-              <span class="text-primary hover:text-primary80">Iniciar Sesión</span>
+              <span class="text-primary hover:text-primary80">Revisa tu agenda</span>
             </RouterLink>
           </p>
         </div>
@@ -38,4 +38,9 @@
 
 <script setup>
 import { RouterLink } from 'vue-router'
+import { useStore } from 'vuex'
+
+const store = useStore()
+const user = store.getters.getUser
+
 </script>
