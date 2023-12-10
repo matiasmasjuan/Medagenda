@@ -7,6 +7,7 @@ export default {
         "primary": "#4d91ff",
         "secondary": "#6c757d",
         "lgray": "#d9e7ff",
+        "primary90": "#c3d0e6",
       }
     },
     fontFamily: {
