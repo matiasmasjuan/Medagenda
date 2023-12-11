@@ -9,7 +9,7 @@
         <p class="text-2xl text-gray-500 py-8">¿Necesitas agendar una consulta?</p>
 
         <div class="flex justify-left ml-20">
-          <RouterLink :to="{ name: 'register' }">
+          <RouterLink :to="{ name: 'schedule' }">
             <button class="text-left px-8 py-2 bg-primary text-white hover:text-lgray rounded-md">
               Agendar Hora
             </button>

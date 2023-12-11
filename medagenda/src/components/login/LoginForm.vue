@@ -1,7 +1,3 @@
-
-import LoginViewVue from '@/views/LoginView.vue';
-
-import LoginViewVue from '@/views/LoginView.vue';
 <template class="flex-grow">
   <div class="mx-auto mt-20 w-2/5 md:w-1/3 lg:w-2/5 xl:w-1/3 mb-20">
     <div class="mx-auto p-10 rounded-lg justify-center grid grid-cols-1 gap-y-4 w-full border space-y-8">

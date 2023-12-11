@@ -5,19 +5,23 @@ const faker = require('faker');
 module.exports = {
   async up (queryInterface, Sequelize) {
     const doctorSchedules = [];
-    const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
+
+    const getRandomDate = () => {
+      const currentDate = new Date();
+      const randomDays = Math.floor(Math.random() * 4);
+      const randomDate = new Date(currentDate);
+      randomDate.setDate(currentDate.getDate() + randomDays);
+      return randomDate;
+    }
 
     for (let i = 1; i <= 10; i++) {
-      for (const dayOfWeek of daysOfWeek) {
-        doctorSchedules.push({
-          doctorId: i,
-          dayOfWeek: dayOfWeek,
-          startTime: faker.date.between('2023-01-01T08:00:00Z', '2023-01-01T12:00:00Z'),
-          endTime: faker.date.between('2023-01-01T14:00:00Z', '2023-01-01T18:00:00Z'),
-          createdAt: new Date(),
-          updatedAt: new Date(),
-        });
-      }
+      doctorSchedules.push({
+        doctorId: i,
+        date: getRandomDate(),
+        moduleId: faker.random.number({ min: 1, max: 5 }),
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      });
     }
 
     await queryInterface.bulkInsert('Schedules', doctorSchedules);

@@ -10,8 +10,16 @@ const encryptedPassword = bcrypt.hashSync(commonPassword, PASSWORD_SALT_ROUNDS);
 module.exports = {
   async up (queryInterface, Sequelize) {
     const roles = ['Doctor', 'Patient'];
-    const usersArray = [];
-    for (let i = 0; i < 10; i++) {
+    const usersArray = [{
+      name: faker.name.findName(),
+        email: faker.internet.email(),
+        password: encryptedPassword,
+        role: roles[1],
+        professionId: Math.floor(Math.random() * 3),
+        createdAt: new Date(),
+        updatedAt: new Date(),
+    }];
+    for (let i = 0; i < 9; i++) {
       usersArray.push({
         name: faker.name.findName(),
         email: faker.internet.email(),

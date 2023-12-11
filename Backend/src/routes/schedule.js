@@ -1,4 +1,5 @@
 const express = require('express');
+const { Op } = require("sequelize");
 const router = express.Router();
 const db = require('../models');
 
@@ -14,6 +15,48 @@ router.get('/', async (req, res) => {
     } else {
       schedules = await db.Schedule.findAll();
     }
+    res.json(schedules);
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+router.get('/calendar', async (req, res) => {
+  try {
+    const { day, professionId } = req.query;
+    const startDate = new Date(`${day}T00:00:00Z`);
+    const endDate = new Date(`${day}T23:59:59Z`);
+
+    const schedules = await db.Schedule.findAll({
+      where: {
+        date: {
+          [Op.between]: [startDate, endDate]
+        },
+      },
+      include: [
+        {
+          model: db.User,
+          where: {
+            role: 'Doctor',
+            professionId: professionId
+          },
+          include: [
+            { 
+              model: db.Profession, 
+            }
+          ],
+        },
+        {
+          model: db.Module,
+        },
+        {
+          model: db.Appointment,
+        }
+      ],
+    });
+
     res.json(schedules);
 
   } catch (error) {
