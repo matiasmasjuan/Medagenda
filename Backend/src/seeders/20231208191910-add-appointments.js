@@ -7,7 +7,7 @@ module.exports = {
     const appointments = [];
     appointments.push({
       scheduleId: 1,
-      patientId: 1,
+      patientId: 4,
       status: faker.random.arrayElement(['Scheduled', 'Canceled', 'Completed']),
       createdAt: new Date(),
       updatedAt: new Date(),

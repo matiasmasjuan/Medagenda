@@ -1,5 +1,4 @@
 'use strict';
-const faker = require('faker');
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
@@ -14,14 +13,16 @@ module.exports = {
       return randomDate;
     }
 
-    for (let i = 1; i <= 10; i++) {
-      doctorSchedules.push({
-        doctorId: i,
-        date: getRandomDate(),
-        moduleId: faker.random.number({ min: 1, max: 5 }),
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      });
+    for (let i = 2; i <= 3; i++) {
+      for (let j = 1; j <= 5; j++) {
+        doctorSchedules.push({
+          doctorId: i,
+          date: getRandomDate(),
+          moduleId: j,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        });
+      }
     }
 
     await queryInterface.bulkInsert('Schedules', doctorSchedules);
