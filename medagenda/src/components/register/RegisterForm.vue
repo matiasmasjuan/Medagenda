@@ -17,6 +17,20 @@
         <input v-model="userData.password" class="border rounded-lg px-4 py-4 w-full" type="password" name="password"
           placeholder="********">
       </div>
+      <div>
+        <h3>Seleccionar Rol:</h3>
+        <div class="flex items-center mx-auto w-1/2 mt-2">
+          <div class="flex items-center mr-8">
+            <input v-model="userData.role" type="radio" value="Patient" id="Patient">
+            <label for="Patient" class="ml-2">Paciente</label>
+          </div>
+
+          <div class="flex items-center ml-8">
+            <input v-model="userData.role" type="radio" value="Doctor" id="Doctor">
+            <label for="Doctor" class="ml-2">Doctor</label>
+          </div>
+        </div>
+      </div>
 
       <div class="mx-auto"> <button @click="register"
           class="text-left px-8 py-2 bg-primary text-white hover:text-lgray rounded-md">
@@ -31,8 +45,10 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { useStore } from 'vuex'
 import axios from 'axios';
 
+const store = useStore()
 const error = ref(null)
 const userData = ref({
   name: '',
@@ -49,7 +65,7 @@ const register = async () => {
     const { data } = await axios.post('http://localhost:3000/api/users', userData.value)
     error.value = null
     store.dispatch('setUser', data)
-    router.push({ path: '/' })
+    router.push({ name: 'home' })
   } catch (e) {
     error.value = e
   }
