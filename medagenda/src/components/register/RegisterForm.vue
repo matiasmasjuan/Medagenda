@@ -48,7 +48,7 @@ const register = async () => {
   try {
     const { data } = await axios.post('http://localhost:3000/api/users', userData.value)
     error.value = null
-    // $store.dispatch('setUser', data)
+    store.dispatch('setUser', data)
     router.push({ path: '/' })
   } catch (e) {
     error.value = e

@@ -45,14 +45,14 @@
               <td class="border px-4 py-2">{{ formatDoctorName(availability.User) }}</td>
               <td class="border px-4 py-2 mx-auto">
                 <div v-if="isAppointend(availability.Appointments)">
-                  <button @click="scheduleButton" class="bg-gray text-white hover:text-lgray mx-auto">
-                    Agendada
-                  </button>
+                  <div class="bg-transparent text-gray-300 border-gray-300 border rounded-md px-8 py-2">
+                    <p class="">Agendada</p>
+                  </div>
                 </div>
                 <div v-else="isAppointend(availability.Appointments)">
-                  <button @click="scheduleButton"
+                  <button @click="scheduleAppointment(availability)"
                     :class="{ 'bg-primary text-white hover:text-lgray mx-auto': !isButtonDisabled, 'bg-transparent text-gray-500 border-gray-200 border': isButtonDisabled }"
-                    :disabled="isButtonDisabled" class="text-left px-8 py-2 rounded-md">
+                    :disabled="isButtonDisabled" class="mx-auto px-8 py-2 rounded-md">
                     Agendar
                   </button>
                 </div>
@@ -75,15 +75,20 @@
 
 <script setup>
 import { ref, onMounted, computed } from 'vue';
+import { useRouter } from 'vue-router'
 import VueDatePicker from '@vuepic/vue-datepicker';
 import '@vuepic/vue-datepicker/dist/main.css'
+import { useStore } from 'vuex'
 import axios from "axios";
 
+const store = useStore()
+const user = store.getters.getUser
 const selectedDate = ref(new Date());
 const professionOptions = ref([]);
 const selectedProfession = ref(null);
 const availabilities = ref([]);
 const requestedAvailability = ref(false);
+const error = ref(null)
 
 onMounted(async () => {
   await fetchOptions();
@@ -106,7 +111,6 @@ const checkAvailability = async () => {
   const formattedDate = formatDate(selectedDate.value);
   try {
     const response = await axios.get(`http://localhost:3000/api/schedules/calendar?day=${formattedDate}&professionId=${selectedProfession.value}`);
-    console.log(response.data)
     availabilities.value = response.data;
     requestedAvailability.value = true
   } catch (e) {
@@ -114,12 +118,17 @@ const checkAvailability = async () => {
   }
 }
 
-const scheduleButton = async () => {
+const scheduleAppointment = async (availability) => {
+  const data = {
+    patientId: user.id,
+    scheduleId: availability.id,
+    status: "Scheduled"
+  }
   try {
-    const response = await axios.get(`http://localhost:3000/api/schedules/calendar?day=${formattedDate}&professionId=${selectedProfession.value}`);
-    console.log(response.data)
-    availabilities.value = response.data;
-    requestedAvailability.value = true
+    const response = await axios.post(`http://localhost:3000/api/appointments`, data);
+    console.log(response)
+    checkAvailability()
+    router.push({ path: '/my-schedule' })
   } catch (e) {
     error.value = e
   }
