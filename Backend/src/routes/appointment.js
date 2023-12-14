@@ -4,22 +4,29 @@ const db = require('../models');
 
 router.get('/', async (req, res) => {
   try {
-    const { patientId, doctorId } = req.query;
+    const { patientId } = req.query;
     let appointments;
-
-    if (patientId && doctorId) {
-      appointments = await db.Appointment.findAll({
-        where: { doctorId, patientId },
-      });
-    }
-    else if (patientId) {
+    if (patientId) {
       appointments = await db.Appointment.findAll({
         where: { patientId },
-      });
-    }
-    else if (doctorId) {
-      appointments = await db.Appointment.findAll({
-        where: { doctorId },
+        include: [
+          {
+            model: db.Schedule,
+            include: [
+              {
+              model: db.Module
+              },
+              {
+                model: db.User,
+                include: [
+                  {
+                  model: db.Profession
+                  }
+                ],
+              }
+            ],
+          },
+        ],
       });
     }
     else {

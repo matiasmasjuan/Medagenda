@@ -12,14 +12,11 @@ module.exports = {
       doctorId: {
         type: Sequelize.INTEGER
       },
-      dayOfWeek: {
-        type: Sequelize.STRING
+      date: {
+        type: Sequelize.DATE
       },
-      startTime: {
-        type: Sequelize.TIME
-      },
-      endTime: {
-        type: Sequelize.TIME
+      moduleId: {
+        type: Sequelize.INTEGER
       },
       createdAt: {
         allowNull: false,

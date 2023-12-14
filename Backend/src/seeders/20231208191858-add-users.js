@@ -9,19 +9,7 @@ const encryptedPassword = bcrypt.hashSync(commonPassword, PASSWORD_SALT_ROUNDS);
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
-    const roles = ['Doctor', 'Patient'];
     const usersArray = [];
-    for (let i = 0; i < 10; i++) {
-      usersArray.push({
-        name: faker.name.findName(),
-        email: faker.internet.email(),
-        password: encryptedPassword,
-        role: roles[Math.floor(Math.random() * roles.length)],
-        professionId: Math.floor(Math.random() * 3),
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      });
-    }
     usersArray.push({
       name: 'Admin',
       email: 'admin@admin.com',
@@ -31,6 +19,28 @@ module.exports = {
       createdAt: new Date(),
       updatedAt: new Date(),
     });
+    for (let i = 1; i < 3; i++) {
+      usersArray.push({
+        name: faker.name.findName(),
+        email: faker.internet.email(),
+        password: encryptedPassword,
+        role: 'Doctor',
+        professionId: i,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      })
+    }
+    for (let i = 0; i < 9; i++) {
+      usersArray.push({
+        name: faker.name.findName(),
+        email: faker.internet.email(),
+        password: encryptedPassword,
+        role: 'Patient',
+        professionId: Math.floor(Math.random() * 3),
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      });
+    }
     return queryInterface.bulkInsert('Users', usersArray);
   },
 
