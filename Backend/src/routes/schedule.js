@@ -55,6 +55,9 @@ router.get('/calendar', async (req, res) => {
           model: db.Appointment,
         }
       ],
+      order: [
+        ['moduleId', 'ASC'],
+      ]
     });
 
     res.json(schedules);
