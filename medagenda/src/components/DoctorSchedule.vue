@@ -1,37 +1,33 @@
 <template class="flex-grow">
   <div class="mx-auto mt-20 mb-20">
     <div class="mx-auto grid">
-      <div v-if="appointments.length > 0">
+      <div v-if="schedules.length > 0">
         <table class="table-auto mx-auto">
           <thead>
             <tr>
               <th class="border px-4 py-2">Fecha</th>
               <th class="border px-4 py-2">Horario</th>
-              <th class="border px-4 py-2">Especialidad</th>
-              <th class="border px-4 py-2">Doctor</th>
               <th class="border px-4 py-2">Estado</th>
             </tr>
           </thead>
           <tbody>
-            <tr v-for="appointment in appointments" :key="appointment.id">
-              <td class="border px-4 py-2">{{ getDate(appointment) }}</td>
-              <td class="border px-4 py-2">{{ getModule(appointment) }}</td>
-              <td class="border px-4 py-2">{{ getProfession(appointment) }}</td>
-              <td class="border px-4 py-2">{{ getDoctorName(appointment) }}</td>
-              <td class="border px-4 py-2">{{ getAppointmentStatus(appointment) }}</td>
+            <tr v-for="schedule in schedules" :key="schedule.id">
+              <td class="border px-4 py-2">{{ getDate(schedule) }}</td>
+              <td class="border px-4 py-2">{{ getModule(schedule) }}</td>
+              <td class="border px-4 py-2">{{ getAppointmentStatus(schedule) }}</td>
             </tr>
           </tbody>
         </table>
       </div>
 
       <div v-else>
-        <p class="text-center text-gray-500">No tienes agendada ninguna hora.</p>
+        <p class="text-center text-gray-500">No hay horas disponibles en este momento.</p>
       </div>
 
       <div class="mx-auto mt-10">
         <RouterLink :to="{ name: 'scheduler' }">
           <button class="px-8 py-2 bg-primary text-white hover:text-lgray rounded-md">
-            Agendar Nueva Hora
+            Agregar Nueva Disponibilidad
           </button>
         </RouterLink>
       </div>
@@ -49,39 +45,43 @@ import { useStore } from 'vuex'
 
 const store = useStore()
 const user = store.getters.getUser
-const appointments = ref([]);
+const schedules = ref([]);
 
 onMounted(async () => {
-  await fetchAppointments();
+  await fetchSchedules();
 });
 
-const fetchAppointments = async () => {
+const fetchSchedules = async () => {
   try {
-    const response = await axios.get(`http://localhost:3000/api/appointments?patientId=${user.id}`);
-    appointments.value = response.data;
+    const response = await axios.get(`http://localhost:3000/api/schedules?doctorId=${user.id}`);
+    schedules.value = response.data;
   } catch (e) {
     error.value = e
   }
 };
 
 const getDate = (data) => {
-  return formatDate(data.Schedule.date)
+  return formatDate(data.date)
 }
 
 const getModule = (data) => {
-  return formatHour(data.Schedule.Module)
-}
-
-const getProfession = (data) => {
-  return data.Schedule.User.Profession.name
-}
-
-const getDoctorName = (data) => {
-  return data.Schedule.User.name
+  return formatHour(data.Module)
 }
 
 const getAppointmentStatus = (data) => {
-  return data.status
+  if (data.Appointments.length > 0) {
+    return translateAppointmentStatus(data.Appointments[0].status)
+  }
+  return 'Disponible'
+}
+
+const translateAppointmentStatus = (status) => {
+  const translations = {
+    Canceled: 'Cancelado',
+    Scheduled: 'Agendado',
+    Completed: 'Completado'
+  }
+  return translations[status]
 }
 
 const formatDate = (data) => {

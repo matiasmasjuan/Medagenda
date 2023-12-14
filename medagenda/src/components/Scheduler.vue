@@ -1,6 +1,7 @@
 <template class="flex-grow">
   <div class="mx-auto mt-20 w-4/5 md:w-2/3 lg:w-2/5 xl:w-2/3 mb-20">
     <div class="mx-auto p-10 rounded-lg justify-center grid grid-cols-1 gap-y-4 w-full border space-y-8 mb-4">
+      <p class="text-2xl text-center">Agendar Hora 🗓</p>
       <div class="flex mx-auto">
         <div class="mr-20 w-1/2">
           <h3>Ingrese la fecha de consulta:</h3>
