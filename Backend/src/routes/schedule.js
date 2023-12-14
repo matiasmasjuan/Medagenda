@@ -11,6 +11,17 @@ router.get('/', async (req, res) => {
     if (doctorId) {
       schedules = await db.Schedule.findAll({
         where: { doctorId },
+        include: [
+          {
+            model: db.User,
+          },
+          {
+            model: db.Module
+          },
+          {
+            model: db.Appointment
+          }
+        ]
       });
     } else {
       schedules = await db.Schedule.findAll();
