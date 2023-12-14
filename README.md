@@ -72,7 +72,7 @@ Con respecto al esquema de la base de datos, se utilizaron 5 modelos:
 
 A continuación se muestra un disño del Schema:
 
-<div align="center"><img src="db/schema.png"></div>
+<div align="center"><img src="db/schema-db.png"></div>
 
 <hr>
 
