@@ -1,4 +1,3 @@
-<!-- src/components/MeetingSelector.vue -->
 <template class="flex-grow">
   <div class="mx-auto mt-20 w-4/5 md:w-2/3 lg:w-2/5 xl:w-2/3 mb-20">
     <div class="mx-auto p-10 rounded-lg justify-center grid grid-cols-1 gap-y-4 w-full border space-y-8 mb-4">
@@ -44,7 +43,19 @@
               <td class="border px-4 py-2">{{ formatHour(availability.Module) }}</td>
               <td class="border px-4 py-2">{{ formatProfession(availability.User) }}</td>
               <td class="border px-4 py-2">{{ formatDoctorName(availability.User) }}</td>
-              <td class="border px-4 py-2">
+              <td class="border px-4 py-2 mx-auto">
+                <div v-if="isAppointend(availability.Appointments)">
+                  <button @click="scheduleButton" class="bg-gray text-white hover:text-lgray mx-auto">
+                    Agendada
+                  </button>
+                </div>
+                <div v-else="isAppointend(availability.Appointments)">
+                  <button @click="scheduleButton"
+                    :class="{ 'bg-primary text-white hover:text-lgray mx-auto': !isButtonDisabled, 'bg-transparent text-gray-500 border-gray-200 border': isButtonDisabled }"
+                    :disabled="isButtonDisabled" class="text-left px-8 py-2 rounded-md">
+                    Agendar
+                  </button>
+                </div>
               </td>
             </tr>
           </tbody>
@@ -92,7 +103,6 @@ const isButtonDisabled = computed(() => {
 })
 
 const checkAvailability = async () => {
-
   const formattedDate = formatDate(selectedDate.value);
   try {
     const response = await axios.get(`http://localhost:3000/api/schedules/calendar?day=${formattedDate}&professionId=${selectedProfession.value}`);
@@ -102,6 +112,21 @@ const checkAvailability = async () => {
   } catch (e) {
     error.value = e
   }
+}
+
+const scheduleButton = async () => {
+  try {
+    const response = await axios.get(`http://localhost:3000/api/schedules/calendar?day=${formattedDate}&professionId=${selectedProfession.value}`);
+    console.log(response.data)
+    availabilities.value = response.data;
+    requestedAvailability.value = true
+  } catch (e) {
+    error.value = e
+  }
+}
+
+const isAppointend = (appointments) => {
+  return appointments.length > 0
 }
 
 const formatDate = (date) => {
@@ -125,5 +150,4 @@ const formatDoctorName = (user) => {
 
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

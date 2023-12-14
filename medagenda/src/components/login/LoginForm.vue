@@ -21,12 +21,6 @@
         </button>
       </div>
 
-      <!-- <router-link to="/signup" class="mx-auto">
-        <button class="px-10 place-self-center text-pink-500 hover:text-pink-700">
-          ¿No tienes una cuenta?
-        </button>
-      </router-link> -->
-
       <RouterLink :to="{ name: 'register' }">
         <button class="w-full px-4 text-primary hover:text-primary80">
           ¿No tienes una cuenta?
@@ -56,7 +50,6 @@ const router = useRouter()
 const login = async () => {
   try {
     const { data } = await axios.post('http://localhost:3000/api/login', userData.value)
-    console.log(data)
     error.value = null
     store.dispatch('setUser', data)
     router.push({ path: '/' })

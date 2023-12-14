@@ -2,7 +2,8 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import RegisterView from '../views/RegisterView.vue'
 import LoginView from '../views/LoginView.vue'
-import ScheduleView from '../views/ScheduleView.vue'
+import SchedulerView from '../views/SchedulerView.vue'
+import UserScheduleView from '../views/UserScheduleView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -23,9 +24,14 @@ const router = createRouter({
       component: LoginView
     },
     {
-      path: '/schedule',
-      name: 'schedule',
-      component: ScheduleView
+      path: '/scheduler',
+      name: 'scheduler',
+      component: SchedulerView
+    },
+    {
+      path: '/my-schedule',
+      name: 'my-schedule',
+      component: UserScheduleView
     },
   ]
 })

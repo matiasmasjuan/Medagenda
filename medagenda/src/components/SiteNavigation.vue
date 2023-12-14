@@ -17,7 +17,7 @@
 
 
         <div v-if="user" class="hidden sm:flex space-x-6">
-          <RouterLink :to="{ name: 'login' }">
+          <RouterLink :to="{ name: 'my-schedule' }">
             <button class="px-4 py-2 hover:text-primary rounded-full">
               Mi Agenda
             </button>

@@ -1,11 +1,11 @@
 <template>
     <main class="flex-grow">
-        <Calendar />
+        <Scheduler />
     </main>
 </template>
 
 <script setup>
-import Calendar from '../components/Calendar.vue'
+import Scheduler from '../components/Scheduler.vue'
 </script>
 
 <style lang="scss" scoped></style>
