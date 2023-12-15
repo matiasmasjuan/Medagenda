@@ -12,6 +12,22 @@ Medagenda es una aplicación utilizada tanto para medicos como pacientes para po
 
 # Instalación ⚙️
 
+### Opción 1: 🐳 Docker
+La forma más fácil de ejecutar el proyecto es a través de Docker 🐳
+
+Para esto, basta con ejecutar el siguiente comando:
+
+```sh
+docker-compose up --build
+```
+
+Lo cual levantará 3 contenedores:
+1. Un contenedor para PostgreSQL llamado `db`. En ```http://localhost:5432/```
+2. Un backend corriendo en ```http://localhost:3000/```. Se pueden acceder a los endpoints mediante la ruta ```/api```. Por ejemplo, si se desea ver la lista de usuarios, la ruta sería: ```http://localhost:3000/api/users```
+3. El frontend corriendo en ```http://localhost:8000/``` Este es fundamental ya que aquí es donde se visualiza la aplicación propiamente tal.
+
+### Opción 2: Ejecución manual ⚡️
+
 1. Crear una base de datos con el usuario postgres localmente con el nombre "medagenda". Los nombres especificos pueden ser modificados en el archivo ```.env``` dentro de la carpeta Backend.
 
 2. Levantar el Backend. Para eso, posicionarse en el directorio Backend/ en la terminal y ejecutar los siguientes comandos:
