@@ -97,7 +97,7 @@ onMounted(async () => {
 
 const fetchOptions = async () => {
   try {
-    const response = await axios.get("http://localhost:3000/api/professions");
+    const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/professions`);
     professionOptions.value = response.data;
   } catch (error) {
     console.error("Error fetching options:", error);
@@ -111,7 +111,7 @@ const isButtonDisabled = computed(() => {
 const checkAvailability = async () => {
   const formattedDate = formatDate(selectedDate.value);
   try {
-    const response = await axios.get(`http://localhost:3000/api/schedules/calendar?day=${formattedDate}&professionId=${selectedProfession.value}`);
+    const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/schedules/calendar?day=${formattedDate}&professionId=${selectedProfession.value}`);
     availabilities.value = response.data;
     requestedAvailability.value = true
   } catch (e) {
@@ -126,7 +126,7 @@ const scheduleAppointment = async (availability) => {
     status: "Scheduled"
   }
   try {
-    const response = await axios.post(`http://localhost:3000/api/appointments`, data);
+    const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/appointments`, data);
     console.log(response)
     checkAvailability()
     router.push({ path: '/my-schedule' })

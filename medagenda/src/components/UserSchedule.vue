@@ -57,7 +57,7 @@ onMounted(async () => {
 
 const fetchAppointments = async () => {
   try {
-    const response = await axios.get(`http://localhost:3000/api/appointments?patientId=${user.id}`);
+    const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/appointments?patientId=${user.id}`);
     appointments.value = response.data;
   } catch (e) {
     error.value = e

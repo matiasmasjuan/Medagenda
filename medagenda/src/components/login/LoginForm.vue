@@ -49,7 +49,7 @@ const router = useRouter()
 
 const login = async () => {
   try {
-    const { data } = await axios.post('http://localhost:3000/api/login', userData.value)
+    const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/api/login`, userData.value)
     error.value = null
     store.dispatch('setUser', data)
     router.push({ path: '/' })

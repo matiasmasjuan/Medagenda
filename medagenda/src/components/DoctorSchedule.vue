@@ -78,7 +78,7 @@ onMounted(async () => {
 
 const fetchSchedules = async () => {
   try {
-    const responseSchedules = await axios.get(`http://localhost:3000/api/schedules?doctorId=${user.id}`);
+    const responseSchedules = await axios.get(`${import.meta.env.VITE_API_URL}/api/schedules?doctorId=${user.id}`);
     schedules.value = responseSchedules.data;
   } catch (e) {
     error.value = e
@@ -86,7 +86,7 @@ const fetchSchedules = async () => {
 };
 const fetchModules = async () => {
   try {
-    const responseModules = await axios.get(`http://localhost:3000/api/modules`);
+    const responseModules = await axios.get(`${import.meta.env.VITE_API_URL}/api/modules`);
     moduleOptions.value = responseModules.data;
   } catch (e) {
     error.value = e
@@ -100,7 +100,7 @@ const newSchedule = async () => {
     moduleId: selectedModule.value
   }
   try {
-    const response = await axios.post(`http://localhost:3000/api/schedules`, data);
+    const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/schedules`, data);
     fetchSchedules()
   } catch (e) {
     error.value = e
