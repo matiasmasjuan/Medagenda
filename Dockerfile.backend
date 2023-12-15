@@ -1,0 +1,19 @@
+FROM node:18
+
+WORKDIR /usr/src/app
+
+COPY Backend/package*.json ./
+
+RUN npm install
+
+RUN npm install -g sequelize-cli
+
+RUN npm install bcrypt
+
+COPY Backend/ .
+
+EXPOSE 3000
+
+# CMD ["./wait-for-postgres.sh", "db", "sequelize", "db:migrate", "&&", "sequelize", "db:seed:all", "&&", "npm", "run", "start"]
+# CMD ["npx", "sequelize-cli", "db:migrate", "&&", "npx", "sequelize-cli", "db:seed:all", "&&", "npm", "run", "start"]
+

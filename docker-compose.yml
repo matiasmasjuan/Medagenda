@@ -1,0 +1,44 @@
+version: '3'
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    depends_on:
+      - db
+    environment:
+      - NODE_ENV=development
+      # - HOST_NAME=192.168.1.93
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=medagenda
+    networks:
+      - backend-network
+    ports:
+      - "3000:3000"
+    command: bash -c "npx sequelize-cli db:migrate && npx sequelize-cli db:seed:all && npm start" 
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    # environment:
+      # - HOST_NAME=192.168.1.93
+    networks:
+      - frontend-network
+    ports:
+      - "8000:8000"
+
+  db:
+    image: postgres:latest
+    restart: always
+    environment:
+      POSTGRES_DB: medagenda
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    networks:
+      - backend-network
+
+networks:
+  backend-network:
+  frontend-network:
